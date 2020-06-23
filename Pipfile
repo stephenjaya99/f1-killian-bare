@@ -1,0 +1,39 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+[scripts]
+pm = "python manage.py"
+mm = "python manage.py makemigrations"
+m = "python manage.py migrate"
+rs = "python manage.py runserver"
+
+[packages]
+django = "==3.0.6"
+gunicorn = "==19.9.0"
+django-heroku = "==0.3.1"
+djangorestframework = "==3.11.0"
+djangorestframework-camel-case = "==1.1.2"
+django-test-without-migrations = "==0.6"
+django-autoslug-iplweb = "==1.9.4"
+django-debug-toolbar = "==2.1"
+django-rq = "==2.2.0"
+rq = "==1.2.2"
+factory-boy = "==2.11.1"
+requests = "==2.22.0"
+mock = "==3.0.5"
+python-jose = "==3.0.1"
+django-cors-headers = "==3.2.1"
+"psycopg2-binary" = "==2.7.4"
+django-redis-cache = "==2.1.0"
+newrelic = "==3.2.1.93"
+coverage = "==4.5.4"
+
+[dev-packages]
+pre-commit = "*"
+"flake8" = "*"
+"pep8" = "*"
+"autopep8" = "*"
+
+[requires]
+python_version = "3.6.7"

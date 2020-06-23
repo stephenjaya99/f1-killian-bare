@@ -1,0 +1,9 @@
+{
+  "name": "Killian: Starter Python App",
+  "description":
+    "A barebones Django app for Dekoruma to be cloned and renamed, which can easily be deployed to Heroku.",
+  "keywords": ["python", "django"],
+  "image": "heroku/python",
+  "addons": ["heroku-postgresql"],
+  "stack": "heroku - 16"
+}

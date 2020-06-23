@@ -1,0 +1,48 @@
+import subprocess
+
+TEMP_DESCRIPTION_FILE = ".tmp_commits_squashed"
+
+def check_output(*popenargs, **kwargs):
+    r"""Run command with arguments and return its output as a byte string.
+    Backported from Python 2.7 as it's implemented as pure python on stdlib.
+    >>> check_output(['/usr/bin/python', '--version'])
+    Python 2.6.2
+    """
+    process = subprocess.Popen(stdout=subprocess.PIPE, *popenargs, **kwargs)
+    output, unused_err = process.communicate()
+    retcode = process.poll()
+    if retcode:
+        cmd = kwargs.get("args")
+        if cmd is None:
+            cmd = popenargs[0]
+        error = subprocess.CalledProcessError(retcode, cmd)
+        error.output = output
+        raise error
+    return output
+
+# get branch, for target branch & for summary
+branch_name = check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"])
+
+# get commit messages, for description
+commits_messages = check_output(["git", "log", "master..", "--pretty=format:%s"])
+commits_messages = '\n'.join(commits_messages.split('\n')[::-1])
+f = open(TEMP_DESCRIPTION_FILE, "w")
+f.write(commits_messages)
+f.close()
+
+# Summary based on brach, description based on squashed commits, then delete temporary file
+p = "!rbt post --summary=%s --description-file=%s && rm %s" % \
+    (branch_name.replace('\n', ''), TEMP_DESCRIPTION_FILE, TEMP_DESCRIPTION_FILE)
+
+REVIEWBOARD_URL = "https://rbcommons.com/s/dekoruma/"
+REPOSITORY = "f1-killian"
+BRANCH = branch_name
+LAND_DEST_BRANCH = "master"
+LAND_SQUASH = True
+OPEN_BROWSER = True
+PUBLISH = True
+ALIASES = {
+    'p': p,
+    'qp': '!git checkout -b $1 && git add . && git commit -m $1 && rbt p',
+    'submit': '!rbt land && git push origin master'
+}

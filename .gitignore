@@ -1,0 +1,14 @@
+venv
+*.pyc
+staticfiles
+.env
+db.sqlite3
+.tmp_commits_squashed
+.idea/
+.vscode
+.DS_Store
+
+# coverage
+htmlcov/
+coverage.xml
+.coverage
